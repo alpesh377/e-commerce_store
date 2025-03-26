@@ -118,22 +118,27 @@ export default function Navbar() {
                         </Menu>
                     </>
                 ) : (
-                    <Button color="inherit" component={Link} href="/login">
-                        Login
-                    </Button>
+                    <Box sx={{ display: { xs: "none", sm: "flex", gap: 2 } }}>
+                        <Button color="inherit" component={Link} href="/register">
+                            Register
+                        </Button>
+                        <Button color="inherit" component={Link} href="/login">
+                            Login
+                        </Button>
+                    </Box>
                 )}
             </Toolbar>
 
             <Drawer anchor="left" open={drawerOpen} onClose={() => toggleDrawer(false)}>
                 <Box sx={{ width: 250 }} role="presentation" onClick={() => toggleDrawer(false)}>
                     <List>
-                        <ListItem  component={Link} href="/">
+                        <ListItem component={Link} href="/">
                             <ListItemText primary="Home" />
                         </ListItem>
-                        <ListItem  component={Link} href="/products">
+                        <ListItem component={Link} href="/products">
                             <ListItemText primary="Products" />
                         </ListItem>
-                        <ListItem  component={Link} href="/categories">
+                        <ListItem component={Link} href="/categories">
                             <ListItemText primary="Categories" />
                         </ListItem>
                     </List>
@@ -141,10 +146,10 @@ export default function Navbar() {
                     <List>
                         {user ? (
                             <>
-                                <ListItem  component={Link} href="/account">
+                                <ListItem component={Link} href="/account">
                                     <ListItemText primary="My Account" />
                                 </ListItem>
-                                <ListItem  component={Link} href="/orders">
+                                <ListItem component={Link} href="/orders">
                                     <ListItemText primary="Orders" />
                                 </ListItem>
                                 <ListItem component="button" onClick={handleSignOut}>
@@ -152,9 +157,14 @@ export default function Navbar() {
                                 </ListItem>
                             </>
                         ) : (
-                            <ListItem  component={Link} href="/login">
-                                <ListItemText primary="Login" />
-                            </ListItem>
+                            <List>
+                                <ListItem component={Link} href="/login">
+                                    <ListItemText primary="Login" />
+                                </ListItem>
+                                <ListItem component={Link} href="/register">
+                                    <ListItemText primary="Sign Up" />
+                                </ListItem>
+                            </List>
                         )}
                     </List>
                 </Box>
