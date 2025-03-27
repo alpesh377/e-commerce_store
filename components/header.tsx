@@ -1,20 +1,25 @@
-"use client";
+'use client';
+
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import AnimatedCounter from "./AnimatedCounter";
 import Grid from "@mui/material/Grid2";
-import AnimatedCounter from "@/components/AnimatedCounter";
-// Styled components
+
+// Styled components (unchanged)
 const HeaderContainer = styled(Box)(({ theme }) => ({
     backgroundColor: "#f2f0f1",
     paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
     overflow: "hidden",
     [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(12),
+        paddingBottom: theme.spacing(12),
     },
 }));
+
 const StyledHeading = styled(motion.h2)(() => ({
     fontFamily: "sans-serif",
     fontSize: "1rem",
@@ -25,10 +30,12 @@ const StyledHeading = styled(motion.h2)(() => ({
         marginBottom: "2rem",
     },
 }));
+
 const StatBox = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
 }));
+
 const StatValue = styled(Typography)(({ theme }) => ({
     fontWeight: 700,
     fontSize: "1.5rem",
@@ -39,10 +46,11 @@ const StatValue = styled(Typography)(({ theme }) => ({
         fontSize: "1.875rem",
     },
     [theme.breakpoints.up("xl")]: {
-        fontSize: "2.5rem",
+        fontSize: "1.875rem",
         marginBottom: "0.5rem",
     },
 }));
+
 const StatLabel = styled(Typography)(({ theme }) => ({
     fontSize: "0.75rem",
     color: "rgba(0, 0, 0, 0.6)",
@@ -51,17 +59,15 @@ const StatLabel = styled(Typography)(({ theme }) => ({
         fontSize: "1rem",
     },
 }));
-const MotionBox = motion.create(Box);
-const ImageSection = styled(MotionBox)(({ theme }) => ({
-    
-}));
-const Header = () => {
+
+export default function Home() {
     return (
         <HeaderContainer>
             <Container maxWidth="lg" sx={{ px: { xs: 2, md: 3 } }}>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={{ xs: 4, md: 8 }} alignItems="flex-start">
+                    {/* Left column with text content - unchanged */}
                     <Grid size={{ xs: 12, md: 6 }}>
-                        <Box sx={{ maxWidth: "100%" }}>
+                        <Box sx={{ maxWidth: "100%", pr: { md: 4 } }}>
                             <StyledHeading
                                 initial={{ y: "100px", opacity: 0, rotate: 10 }}
                                 whileInView={{ y: "0", opacity: 1, rotate: 0 }}
@@ -85,7 +91,8 @@ const Header = () => {
                                     maxWidth: "545px",
                                 }}
                             >
-                                Explore our curated collection of premium products, crafted to elevate your lifestyle and deliver unmatched value straight to your door.
+                                Explore our curated collection of premium products, crafted to elevate your lifestyle and deliver
+                                unmatched value straight to your door.
                             </Typography>
                         </motion.div>
                         <motion.div
@@ -115,6 +122,8 @@ const Header = () => {
                                 Shop Now
                             </Button>
                         </motion.div>
+
+                        {/* Stats section - unchanged */}
                         <Box
                             component={motion.div}
                             initial={{ y: "100px", opacity: 0 }}
@@ -123,7 +132,7 @@ const Header = () => {
                             transition={{ delay: 1.5, duration: 0.6 }}
                             sx={{
                                 display: "flex",
-                                height: { md: "100%" },
+                                height: { xs: "auto", md: "100%" },
                                 maxHeight: {
                                     md: "44px",
                                     lg: "52px",
@@ -132,8 +141,10 @@ const Header = () => {
                                 alignItems: "center",
                                 justifyContent: { xs: "center", md: "flex-start" },
                                 flexWrap: { xs: "wrap", sm: "nowrap" },
-                                mb: { md: "116px" },
-                                gap: { md: 3, lg: 6, xl: 8 },
+                                mb: { xs: 0, md: 0 },
+                                gap: { xs: 2, md: 3, lg: 6, xl: 8 },
+                                zIndex: 1,
+                                position: "relative",
                             }}
                         >
                             <StatBox>
@@ -146,12 +157,12 @@ const Header = () => {
                                 orientation="vertical"
                                 flexItem
                                 sx={{
-                                    ml: { xs: 3, md: 0 },
+                                    ml: { xs: 0, md: 0 },
                                     height: { xs: "48px", md: "100%" },
                                     bgcolor: "rgba(0, 0, 0, 0.1)",
                                 }}
                             />
-                            <StatBox sx={{ ml: { xs: 3, md: 0 } }}>
+                            <StatBox>
                                 <StatValue>
                                     <AnimatedCounter from={0} to={2000} />+
                                 </StatValue>
@@ -163,18 +174,10 @@ const Header = () => {
                                 sx={{
                                     display: { xs: "none", sm: "block" },
                                     height: { sm: "48px", md: "100%" },
-                                    ml: { sm: 3, md: 0 },
                                     bgcolor: "rgba(0, 0, 0, 0.1)",
                                 }}
                             />
-                            <StatBox
-                                sx={{
-                                    width: { xs: "100%", sm: "auto" },
-                                    textAlign: { xs: "center", sm: "left" },
-                                    mt: { xs: 1.5, sm: 0 },
-                                    ml: { sm: 3, md: 0 },
-                                }}
-                            >
+                            <StatBox>
                                 <StatValue>
                                     <AnimatedCounter from={0} to={3000} />+
                                 </StatValue>
@@ -182,58 +185,146 @@ const Header = () => {
                             </StatBox>
                         </Box>
                     </Grid>
-                    <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <ImageSection
+
+                    {/* Right column with image - modified */}
+                    <Grid
+                        size={{ xs: 12, md: 6 }}
+                        sx={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            justifyContent: "flex-end",
+                            position: "relative",
+                            mt: { xs: 2, md: 0 },
+                            pl: { md: 20 },
+                        }}
+                    >
+                        <motion.div
                             initial={{ y: "100px", opacity: 0, rotate: 10 }}
                             whileInView={{ y: "0", opacity: 1, rotate: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 2.3, duration: 0.8 }}
+                            style={{
+                                position: "relative",
+                                width: "100%",
+                                height: "auto",
+                                aspectRatio: "6/8",
+                                overflow: "visible",
+                            }}
                         >
+                            {/* Main product image container */}
+                            <Box
+                                sx={{
+                                    position: "relative",
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: "16px",
+                                    overflow: "hidden",
+                                    backgroundColor: "transparent",
+                                    boxShadow: "none",
+                                    transform: { md: "translateX(40px)" },
+                                    maxHeight: { xs: "1000px", xl: "1800px" }, // Moved maxHeight here
+                                }}
+                            >
+                                {/* Desktop image */}
+                                <Box
+                                    sx={{
+                                        display: { xs: "none", md: "block" },
+                                        position: "relative",
+                                        width: "100%",
+                                        height: "100%",
+                                        '@media (min-width: 1920px)': {  // Using media query instead of theme.breakpoints
+                                            transform: "scale(1.2)",
+                                        },
+                                    }}
+                                >
+                                    <Image
+                                        src="/header-homepage.png"
+                                        alt="Fashion models wearing stylish outfits"
+                                        fill
+                                        priority
+                                        sizes="(max-width: 900px) 100vw, (max-width: 1536px) 50vw, 60vw"
+                                        style={{
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                </Box>
+
+                                {/* Mobile image */}
+                                <Box
+                                    sx={{
+                                        display: { xs: "block", md: "none" },
+                                        position: "relative",
+                                        width: "100%",
+                                        height: "100%",
+                                    }}
+                                >
+                                    <Image
+                                        src="/header-res-homepage.png"
+                                        alt="Fashion models wearing stylish outfits - mobile view"
+                                        fill
+                                        priority
+                                        sizes="100vw"
+                                        style={{
+                                            objectFit: "contain",
+                                            objectPosition: "center",
+                                        }}
+                                    />
+                                </Box>
+                            </Box>
+
+                            {/* Decorative elements - unchanged */}
                             <Box
                                 sx={{
                                     position: "absolute",
-                                    right: { xs: "10%", md: "15%", lg: "20%" },
-                                    top: { xs: "10%", md: "15%", lg: "20%" },
+                                    right: { xs: "20%", md: "-5%" },
+                                    top: { xs: "5%", md: "10%" },
+                                    zIndex: 2,
+                                    animation: "spin 4s infinite linear",
+                                    "@keyframes spin": {
+                                        "0%": { transform: "rotate(0deg)" },
+                                        "100%": { transform: "rotate(360deg)" },
+                                    },
                                 }}
                             >
                                 <Image
-                                    priority
                                     src="/big-star.svg"
                                     height={104}
                                     width={104}
-                                    alt="big star"
+                                    alt="Decorative star"
                                     style={{
                                         maxWidth: "54px",
-                                        maxHeight: "104px" ,
-                                        animation: "spin 4s infinite linear",
+                                        maxHeight: "104px",
                                     }}
                                 />
                             </Box>
                             <Box
                                 sx={{
                                     position: "absolute",
-                                    left: { xs: "10%", md: "15%", lg: "20%" },
-                                    bottom: { xs: "10%", md: "15%", lg: "20%" },
+                                    left: { xs: "5%", md: "-5%" },
+                                    bottom: { xs: "5%", md: "10%" },
+                                    zIndex: 2,
+                                    animation: "spin 3s infinite linear",
+                                    "@keyframes spin": {
+                                        "0%": { transform: "rotate(0deg)" },
+                                        "100%": { transform: "rotate(360deg)" },
+                                    },
                                 }}
                             >
                                 <Image
-                                    priority
                                     src="/small-star.svg"
                                     height={56}
                                     width={56}
-                                    alt="small star"
+                                    alt="Decorative small star"
                                     style={{
                                         maxWidth: "36px",
                                         maxHeight: "56px",
-                                        animation: "spin 3s infinite linear",
                                     }}
                                 />
                             </Box>
-                        </ImageSection>
+                        </motion.div>
                     </Grid>
                 </Grid>
             </Container>
         </HeaderContainer>
     );
-};
-export default Header;
+}
